@@ -15,6 +15,7 @@ namespace  // anonymous (private) working area
   //Applicant Functions
   STUB( getAllJobs   )
   STUB( filterJobs   )
+  STUB( apply )
 
   //Employer Functions
   STUB( getReviews   )
@@ -75,7 +76,11 @@ namespace Domain::Session
     std::vector<std::string> availableCommands;
     availableCommands.reserve( _commandDispatch.size() );
 
-    for( const auto & [command, function] : _commandDispatch ) availableCommands.emplace_back( command );
+    for( const auto & [command, function] : _commandDispatch ) 
+    {
+      if( command != "Apply" ) availableCommands.emplace_back( command );
+    }
+    
 
     return availableCommands;
   }
@@ -121,7 +126,8 @@ namespace Domain::Session
   ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Borrower", credentials )
   {
     _commandDispatch = { { "All Jobs", getAllJobs },
-                         { "Filter Jobs", filterJobs }};
+                         { "Filter Jobs", filterJobs },
+                         { "Apply", apply }};
   }
 
 
