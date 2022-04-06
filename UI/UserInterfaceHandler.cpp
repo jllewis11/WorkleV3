@@ -20,7 +20,7 @@ namespace UI
   {
     auto & persistantData = TechnicalServices::Persistence::PersistenceHandler::instance();
     auto   requesedUI     = persistantData["Component.UI"];
-    std::make_unique<UI::SimpleUI>();
+    return std::make_unique<UI::SimpleUI>();
 
 
   }

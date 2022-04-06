@@ -17,8 +17,8 @@ namespace Domain::Session
       SessionBase( const std::string & description,  const UserCredentials & credentials );
 
       // Operations
-      std::vector<std::string> getCommands   ()                                                                     override;    // retrieves the list of actions (commands)
-      std::any                 executeCommand( const std::string & command, const std::vector<std::string> & args ) override;    // executes one of the actions retrieved
+      std::vector<std::string> getCommands()                                                                     override;    // retrieves the list of actions (commands)
+      std::any         executeCommand( const std::string & command, const std::vector<std::string> & args )         override;    // executes one of the actions retrieved
 
 
       // Destructor
