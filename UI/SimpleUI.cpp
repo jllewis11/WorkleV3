@@ -102,8 +102,8 @@ namespace UI
 
       do
       {
-        for( unsigned i = 0; i != commands.size(); ++i ) std::cout << std::setw( 2 ) << i << " - " << commands[i] << '\n';
-        std::cout << std::setw( 2 ) << commands.size() << " - " << "Quit\n";
+        for( unsigned i = 0; i != commands.size(); ++i ) std::cout << std::setw( 3 ) << i << " - " << commands[i] << '\n';
+        std::cout << std::setw( 3 ) << commands.size() << " - " << "Quit\n";
 
         std::cout << "  action (0-" << commands.size() << "): ";
         std::cin >> menuSelection;
@@ -124,6 +124,7 @@ namespace UI
       if ( selectedCommand == "All Jobs")
       {
         std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();
+        
         //Print all jobs and all values in the vector vector 
         
         for (unsigned i = 0; i < allJobs.size(); i++)
@@ -236,7 +237,65 @@ namespace UI
 
 
       }
+      else if( selectedCommand == "Manage Profile")
+      {
+          std::vector<std::vector<std::string>> allProfiles = _persistentData.findProfiles();
+          int option = 0;
+          std::string newEntry;
+          std::string oldPassword;
+          std::cout<<"Select what you would like to manage"<<std::endl;
+          std::cout<<"1. Name"<<std::endl<<"2. Jobs"<<std::endl<<"3. Location"<<std::endl<<"4. Level of Education"<<std::endl<<"5. Password"<<std::endl;
+          std::cout << "action (1-5): ";
+          std::cin>>option;
 
+          switch(option){
+            case 1:
+            break;
+
+            case 2:
+            std::cout<<"Enter the work experience you wish to add: ";
+            std::cin >> std::ws;
+            std::getline( std::cin, newEntry);
+            
+            allProfiles[1].emplace( allProfiles[1].begin()+3, newEntry );
+            for (int i = 0; i < allProfiles[1].size(); ++i)
+            { std::cout << allProfiles[1][i] << ", ";}
+            std::cout << std::endl;
+            break;
+
+            case 3:
+            break;
+
+            case 4:
+            break;
+
+            case 5:
+            std::cout<<"Please enter your current password: ";
+            std::cin>>std::ws;
+            std::getline(std::cin, oldPassword);
+            std::cout<<"Please enter your new password: ";
+            std::cin>>std::ws;
+            std::getline(std::cin, newEntry);
+            if (oldPassword == credentials.passPhrase)
+            {
+              std::cout<<"Password successfully changed"<<std::endl;
+              break;
+            }
+            std::cout<<"Error: old password does not match"<<std::endl;
+            break;
+
+          }
+
+
+          // for(int i = 0; i< allProfiles.size(); i++)
+          // {
+          //     std::cout<<allProfiles[1][i]<<" ";
+          // }
+
+          
+
+
+      }
 
       else if( selectedCommand == "Another command" ) /* ... */ {}
 

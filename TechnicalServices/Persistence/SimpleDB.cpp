@@ -84,15 +84,25 @@ namespace TechnicalServices::Persistence
              {"Site Reliability Engineer III", "Google","Full Time", "true", "220000"}};
   }
 
+  std::vector<std::vector<std::string> > SimpleDB::findProfiles()
+  {
+    return { { "Tiffany West", "3456", "11", "Front-end Developer at Amazon", "Minnesota", "Bachelors in Computer Science"},
+             { "John Doe", "9481", "6", "Front-end Developer at Fedex", "Minnesota", "Bachelors in Computer Science"},
+             { "Timothy Jackson", "7895", "5", "Full-stack Developer at Twitter", "California", "Bachelors in Computer Science"},
+             { "Ray Miles", "2578", "2", "Software Engineer at Bungie", "Seattle", "Bachelors in Computer Science"},
+             { "John Smith", "9985", "8", "Data Scientist at Amazon", "California", "Bachelors in Computer Science"},
+             { "Jane Doe", "4869", "6", "Technical Lead at Meta", "California", "Masters in Computer Science"}};
+  }
+
 
   UserCredentials SimpleDB::findCredentialsByName( const std::string & name )
   {
     static std::vector<UserCredentials> storedUsers =
     {
     // Username    Pass Phrase         Authorized roles
-      {"Jane",    "Doe",              {"Applicant",     "Company"   }},
-      {"John",    "Doe",              {"Applicant"                  }},
-      {"Mary",    "Smith",            {"Administrator"              }}
+      {"Jane",    "Doe",              {"Applicant",     "Company"   },},
+      {"John",    "Doe",              {"Applicant"                  },},
+      {"Mary",    "Smith",            {"Administrator"              },}
     };
 
     for( const auto & user : storedUsers ) if( user.userName == name ) return user;
