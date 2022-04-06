@@ -100,9 +100,9 @@ namespace TechnicalServices::Persistence
     static std::vector<UserCredentials> storedUsers =
     {
     // Username    Pass Phrase         Authorized roles
-      {"Jane",    "Doe",              {"Applicant",     "Company"   },},
-      {"John",    "Doe",              {"Applicant"                  },},
-      {"Mary",    "Smith",            {"Administrator"              },}
+      {"Jane",    "Doe",              {"Applicant",     "Company"   }},
+      {"John",    "Doe",              {"Applicant"                  }},
+      {"Mary",    "Smith",            {"Administrator"              }}
     };
 
     for( const auto & user : storedUsers ) if( user.userName == name ) return user;

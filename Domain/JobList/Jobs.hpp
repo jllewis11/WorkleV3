@@ -7,18 +7,15 @@ namespace Domain::JobList
   class Jobs : public Domain::JobList::ApplyJobsHandler
   {
   public:
-    // Constructors
-    using ApplyJobsHandler::ApplyJobsHandler;  // inherit constructors
+    
+    using ApplyJobsHandler::ApplyJobsHandler;
 
-    // Operations
+    
 
     ~Jobs() noexcept override;
-  }; // class Jobs
-  /*****************************************************************************
-  ** Inline implementations
-  ******************************************************************************/
+  }; 
   inline Jobs::~Jobs() noexcept
   {}
 
 
-}  // namespace Domain::Library
+} 

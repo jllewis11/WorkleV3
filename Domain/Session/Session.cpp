@@ -16,6 +16,7 @@ namespace  // anonymous (private) working area
   STUB( getAllJobs   )
   STUB( filterJobs   )
   STUB( manageProfile)
+  STUB( apply)
 
   //Employer Functions
   STUB( getReviews   )
@@ -123,11 +124,11 @@ namespace Domain::Session
 
 
 
-  ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Borrower", credentials )
+  ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Applicant", credentials )
   {
     _commandDispatch = { { "All Jobs", getAllJobs },
                          { "Filter Jobs", filterJobs },
-                         { "Manage Profile", manageProfile},
+                         { "Manage Profile", manageProfile },
                          { "Apply", apply }};
   }
 

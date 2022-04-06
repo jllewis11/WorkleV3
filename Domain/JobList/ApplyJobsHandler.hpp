@@ -2,7 +2,7 @@
 
 namespace Domain::JobList
 {
-  // Library Package within the Domain Layer Abstract class
+  // UC2 SSD
   class ApplyJobsHandler
   {
     public:
@@ -14,16 +14,9 @@ namespace Domain::JobList
       ApplyJobsHandler & operator=( const ApplyJobsHandler &  rhs ) = default;  // copy assignment
       ApplyJobsHandler & operator=(       ApplyJobsHandler && rhs ) = default;  // move assignment
 
-  };    // class MaintainBooksHandler
+  };
 
-
-
-
-
-  /*****************************************************************************
-  ** Inline implementations
-  ******************************************************************************/
   inline ApplyJobsHandler::~ApplyJobsHandler() noexcept = default;
 
 
-} // namespace Domain::Library
+
