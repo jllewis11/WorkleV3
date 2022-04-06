@@ -4,11 +4,11 @@
 #include <any>
 #include <vector>
 
-namespace  // anonymous (private) working area
+namespace 
 {
-  // 1)  First define all system events (commands, actions, requests, etc.)
-  #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
-                              { return {}; }  // Stubbed for now
+
+  #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase, const std::vector<std::string> ) \
+                              { return {}; } 
 
 
   // 2)  JL - Then define all system commands and possible functions with no implementations.
@@ -27,15 +27,6 @@ namespace  // anonymous (private) working area
   STUB( shutdown     )
 
 
-  std::any checkoutBook( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
-  {
-    // TO-DO  Verify there is such a book and the mark the book as being checked out by user
-    std::string results = "Title \"" + args[0] + "\" checkout by \"" + session._credentials.userName + '"';
-    session._logger << "checkoutBook:  " + results;
-    return {results};
-  }
-
-
   std::any apply(Domain::Session::SessionBase & session, std::vector<std::string> & args)
   {
     // TO-DO  Verify there is such a job and the mark the job as being applied by user
@@ -43,13 +34,7 @@ namespace  // anonymous (private) working area
     session._logger << "apply:  " + results;
     return {results};
   }
-}    // anonymous (private) working area
-
-
-
-
-
-
+}  
 
 
 
@@ -106,15 +91,12 @@ namespace Domain::Session
 
     if( results.has_value() )
     {
-      // The type of result depends on function called.  Let's assume strings for now ...
       _logger << "Responding with: \"" + std::any_cast<const std::string &>( results ) + '"';
     }
 
     return results;
   }
 
-  // 2) Now map the above system events to roles authorized to make such a request.  Many roles can request the same event, and many
-  //    events can be requested by a single role.
   AdministratorSession::AdministratorSession( const UserCredentials & credentials ) : SessionBase( "Administrator", credentials )
   {
     _commandDispatch = { { "Reset Account", resetAccount },

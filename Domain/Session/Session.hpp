@@ -23,12 +23,10 @@ namespace Domain::Session
 
 
     // Destructor
-    // Pure virtual destructor helps force the class to be abstract, but must still be implemented
     ~SessionBase() noexcept override = 0;
 
   protected:
-  public:    // Dispatched functions need access to these attributes, so for now make these public instead of protected
-    // Types
+  public: 
     using DispatchTable = std::map<std::string, std::any ( * )( Domain::Session::SessionBase &, const std::vector<std::string> & )>;
     friend class Policy;
 

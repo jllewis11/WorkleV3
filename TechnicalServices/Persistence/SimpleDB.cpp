@@ -16,9 +16,7 @@
 
 namespace
 {
-  // User defined manipulator with arguments that allows std::istream::ignore to be called "in-line" (chained)
-  // Usage example:
-  //    stream >> first >> ignore(',') second >> ignore('\n') ;
+
   struct ignore
   {
     char _seperator;
@@ -37,13 +35,7 @@ namespace
 
 namespace TechnicalServices::Persistence
 {
-  // Design decision/Programming note:
-  //  - The persistence database contains adaptation data, and one of the adaptable items is which Logger component to use
-  //  - The factory function TechnicalServices::Logging::create(std::ostream &) depends of the persistence database to obtain
-  //    through adaptation data which kind of Logging component to create
-  //  - However, the Persistence database implementations, like this one, should (must?) be able to log messages
-  //  - Therefore, to maintain the design decision to allow Logging to depend on Persistence, but not Persistence to depend on
-  //    Logging, we mustn't create this logger through the LoggingHandler interface, but rather select and create a specific Logger
+ 
   SimpleDB::SimpleDB() : _loggerPtr( std::make_unique<TechnicalServices::Logging::SimpleLogger>())
   {
     _logger << "Simple DB being used and has been successfully initialized";

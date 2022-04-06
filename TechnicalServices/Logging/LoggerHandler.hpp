@@ -25,7 +25,6 @@ namespace TechnicalServices::Logging
 
 
       // Destructor
-      // Pure virtual destructor helps force the class to be abstract, but must still be implemented
       virtual ~LoggerHandler() noexcept = 0;
 
 
@@ -35,12 +34,5 @@ namespace TechnicalServices::Logging
       LoggerHandler & operator=(       LoggerHandler && rhs ) = delete;    // move assignment
   };
 
-
-
-
-
-  /*****************************************************************************
-  ** Inline default implementations
-  ******************************************************************************/
   inline LoggerHandler::~LoggerHandler() noexcept = default;
 } // namespace TechnicalServices::Logging

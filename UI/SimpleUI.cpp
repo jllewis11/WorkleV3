@@ -24,7 +24,7 @@ namespace UI
 {
   // Default constructor
   SimpleUI::SimpleUI()
-  : _jobHandler   ( std::make_unique<Domain::JobList::Jobs>()                     ),   // will replace these with factory calls in the next increment
+  : _jobHandler   ( std::make_unique<Domain::JobList::Jobs>()                     ),   
     _loggerPtr     ( TechnicalServices::Logging::LoggerHandler::create()            ),
     _persistentData( TechnicalServices::Persistence::PersistenceHandler::instance() )
   {
@@ -115,12 +115,7 @@ namespace UI
       _logger << "Command selected \"" + selectedCommand + '"';
 
 
-      /******************************************************************************************************************************
-      **  5) The user interface will collect relevant information to execute the chosen command.  This section requires the UI to
-      **     know what information to collect, and hence what the available commands are.  Our goal is loose (minimal) coupling, not
-      **     no coupling. This can be achieved in a variety of ways, but one common way is to pass strings instead of strong typed
-      **     parameters.
-      ******************************************************************************************************************************/
+      
       if ( selectedCommand == "All Jobs")
       {
         std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();

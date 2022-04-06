@@ -31,8 +31,6 @@ namespace TechnicalServices::Persistence
     private:
       std::unique_ptr<TechnicalServices::Logging::LoggerHandler> _loggerPtr;
 
-      // convenience reference object enabling standard insertion syntax
-      // This line must be physically after the definition of _loggerPtr
       TechnicalServices::Logging::LoggerHandler & _logger = *_loggerPtr;
 
 
