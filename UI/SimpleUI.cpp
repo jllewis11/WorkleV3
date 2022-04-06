@@ -245,6 +245,7 @@ namespace UI
           std::string oldPassword;
           std::cout<<"Select what you would like to manage"<<std::endl;
           std::cout<<"1. Name"<<std::endl<<"2. Jobs"<<std::endl<<"3. Location"<<std::endl<<"4. Level of Education"<<std::endl<<"5. Password"<<std::endl;
+          std::cout << "action (1-5): ";
           std::cin>>option;
 
           switch(option){
@@ -256,7 +257,10 @@ namespace UI
             std::cin >> std::ws;
             std::getline( std::cin, newEntry);
             
-            allProfiles[1].emplace( allProfiles[1].begin(), newEntry );
+            allProfiles[1].emplace( allProfiles[1].begin()+3, newEntry );
+            for (int i = 0; i < allProfiles[1].size(); ++i)
+            { std::cout << allProfiles[1][i] << ", ";}
+            std::cout << std::endl;
             break;
 
             case 3:
@@ -267,8 +271,10 @@ namespace UI
 
             case 5:
             std::cout<<"Please enter your current password: ";
+            std::cin>>std::ws;
             std::getline(std::cin, oldPassword);
             std::cout<<"Please enter your new password: ";
+            std::cin>>std::ws;
             std::getline(std::cin, newEntry);
             if (oldPassword == credentials.passPhrase)
             {
@@ -276,6 +282,7 @@ namespace UI
               break;
             }
             std::cout<<"Error: old password does not match"<<std::endl;
+            break;
 
           }
 
