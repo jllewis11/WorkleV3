@@ -76,7 +76,11 @@ namespace Domain::Session
     std::vector<std::string> availableCommands;
     availableCommands.reserve( _commandDispatch.size() );
 
-    for( const auto & [command, function] : _commandDispatch ) availableCommands.emplace_back( command );
+    for( const auto & [command, function] : _commandDispatch ) 
+    {
+      if( command != "Apply" ) availableCommands.emplace_back( command );
+    }
+    
 
     return availableCommands;
   }
@@ -123,7 +127,8 @@ namespace Domain::Session
   {
     _commandDispatch = { { "All Jobs", getAllJobs },
                          { "Filter Jobs", filterJobs },
-                         { "Manage Profile", manageProfile}};
+                         { "Manage Profile", manageProfile},
+                         { "Apply", apply }};
   }
 
 
