@@ -72,6 +72,32 @@ namespace Domain::Session
     return availableCommands;
   }
 
+  std::any SessionBase::executeCommand( const std::string & command, const std::vector<std::string> & args )
+  {
+    std::string parameters;
+    for( const auto & arg : args ) parameters += '"' + arg + "\"  ";
+    _logger << "Responding to \"" + command + "\" request with parameters: " + parameters;
+
+    auto it = _commandDispatch.find( command );
+    if( it == _commandDispatch.end() )
+    {
+      std::string message = __func__;
+      message += " attempt to execute \"" + command + "\" failed, no such command";
+
+      _logger << message;
+      throw BadCommand( message );
+    }
+
+    auto results = it->second( *this, args );
+
+    if( results.has_value() )
+    {
+      // The type of result depends on function called.  Let's assume strings for now ...
+      _logger << "Responding with: \"" + std::any_cast<const std::string &>( results ) + '"';
+    }
+
+    return results;
+  }
 
   // 2) Now map the above system events to roles authorized to make such a request.  Many roles can request the same event, and many
   //    events can be requested by a single role.
