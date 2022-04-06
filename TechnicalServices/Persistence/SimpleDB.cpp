@@ -84,6 +84,15 @@ namespace TechnicalServices::Persistence
              {"Site Reliability Engineer III", "Google","Full Time", "true", "220000"}};
   }
 
+  std::vector<std::vector<std::string> > SimpleDB::findProfiles()
+  {
+    return { { "Jane Doe", "3456", "11", "Front-end Developer at Amazon", "Minnesota", "Bachelors in Computer Science"},
+             { "Timothy Jackson", "7895", "5", "Full-stack Developer at Twitter", "California", "Bachelors in Computer Science"},
+             { "Ray Miles", "2578", "2", "Software Engineer at Bungie", "Seattle", "Bachelors in Computer Science"},
+             { "Hanes Smith", "9985", "8", "Data Scientist at Amazon", "California", "Bachelors in Computer Science"},
+             { "Desmond Avila", "4869", "6", "Technical Lead at Meta", "California", "Masters in Computer Science"}};
+  }
+
 
   UserCredentials SimpleDB::findCredentialsByName( const std::string & name )
   {
