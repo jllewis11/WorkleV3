@@ -16,6 +16,7 @@ namespace TechnicalServices::Persistence
     std::string               userName;
     std::string               passPhrase;
     std::vector<std::string>  roles;
+    std::string               accNum;
   };
 
 
@@ -41,6 +42,7 @@ namespace TechnicalServices::Persistence
       // Operations
       virtual std::vector<std::string> findRoles()                                       = 0;   // Returns list of all legal roles
       virtual std::vector<std::vector<std::string> >findJobs()                           = 0;   // Returns list of all jobs
+      virtual std::vector<std::vector<std::string> >findProfiles()                           = 0;
       virtual UserCredentials          findCredentialsByName( const std::string & name ) = 0;   // Returns credentials for specified user, throws NoSuchUser if user not found
 
       // Destructor

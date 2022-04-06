@@ -61,5 +61,6 @@ namespace Domain::Session
     catch( const TechnicalServices::Persistence::PersistenceHandler::NoSuchUser & ) {}  // Catch and ignore this anticipated condition
 
     return nullptr;
+
   }
 } // namespace Domain::Session
