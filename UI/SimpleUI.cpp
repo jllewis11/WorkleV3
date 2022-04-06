@@ -8,7 +8,10 @@
 #include <string>      // string, getline()
 #include <vector>
 
-#include "Domain/Library/Books.hpp"    // Include for now - will replace next increment
+
+#include "Domain/JobList/ApplyJobsHandler.hpp"
+#include "Domain/JobList/Jobs.hpp"
+
 #include "Domain/Session/SessionHandler.hpp"
 
 #include "TechnicalServices/Logging/LoggerHandler.hpp"
@@ -21,7 +24,7 @@ namespace UI
 {
   // Default constructor
   SimpleUI::SimpleUI()
-  : _bookHandler   ( std::make_unique<Domain::Library::Books>()                     ),   // will replace these with factory calls in the next increment
+  : _jobHandler   ( std::make_unique<Domain::JobList::Jobs>()                     ),   // will replace these with factory calls in the next increment
     _loggerPtr     ( TechnicalServices::Logging::LoggerHandler::create()            ),
     _persistentData( TechnicalServices::Persistence::PersistenceHandler::instance() )
   {
@@ -118,17 +121,122 @@ namespace UI
       **     no coupling. This can be achieved in a variety of ways, but one common way is to pass strings instead of strong typed
       **     parameters.
       ******************************************************************************************************************************/
-      if( selectedCommand == "Checkout Book" )
+      if ( selectedCommand == "All Jobs")
       {
-        std::vector<std::string> parameters( 3 );
+        std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();
+        //Print all jobs and all values in the vector vector 
+        
+        for (unsigned i = 0; i < allJobs.size(); i++)
+        {
+          std::cout << "Job #" << i << std::endl;
+          for (unsigned j = 0; j < allJobs[i].size(); j++)
+          {
+            std::cout << allJobs[i][j] << " ";
+          }
+          std::cout << std::endl;
+        }
+        std::vector<std::string> parameters2( 5 );
 
-        std::cout << " Enter book's title:  ";  std::cin >> std::ws;  std::getline( std::cin, parameters[0] );
-        std::cout << " Enter book's author: ";  std::cin >> std::ws;  std::getline( std::cin, parameters[1] );
-        std::cout << " Enter book's ISBN:   ";  std::cin >> std::ws;  std::getline( std::cin, parameters[2] );
+        char choice;
+        //Ask if they would like to apply to the job
+        std::cout << "Would you like to apply to this job? (y/n): ";
+        std::cin >> std::ws;
+        std::cin >> choice;
 
-        auto results = sessionControl->executeCommand( selectedCommand, parameters );
-        if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
+        //If they want to apply, ask for the job number, name, email, resume.
+        
+        if (choice == 'y')
+        {
+          std::cout << "Enter job number: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters2[0] );
+
+          std::cout << "Enter your name: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters2[1] );
+
+          std::cout << "Enter your email: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters2[2] );
+
+          std::cout << "Enter your resume: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters2[3] );
+
+          std::cout << "Enter your phone number: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters2[4] );
+        
+          selectedCommand = "Apply";
+          auto results = sessionControl->executeCommand( selectedCommand, parameters2 );
+          if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
+        }
+
+      } else if (selectedCommand == "Filter Jobs")
+      //Filter through Keyword
+      {
+        //Ask for keyword
+        //Print Search for either Title, company 
+
+        std::vector<std::string> parameters3( 1 );
+        std::cout << "Enter keyword: ";
+        std::cin >> std::ws;
+        std::getline( std::cin, parameters3[0] );
+
+        std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();
+        //Search through allJobs and print out all jobs that match the keyword
+        for (unsigned i = 0; i < allJobs.size(); i++)
+        {
+          if (allJobs[i][0].find(parameters3[0]) != std::string::npos)
+          {
+            std::cout << "Job #" << i << std::endl;
+            for (unsigned j = 0; j < allJobs[i].size(); j++)
+            {
+              std::cout << allJobs[i][j] << " ";
+            }
+            std::cout << std::endl;
+          }
+        }
+        std::vector<std::string> parameters4( 5 );
+
+        char choice;
+        //Ask if they would like to apply to the job
+        std::cout << "Would you like to apply to this job? (y/n): ";
+        std::cin >> std::ws;
+        std::cin >> choice;
+
+        //If they want to apply, ask for the job number, name, email, resume.
+        
+        if (choice == 'y')
+        {
+          std::cout << "Enter job number: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[0] );
+
+          std::cout << "Enter your name: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[1] );
+
+          std::cout << "Enter your email: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[2] );
+
+          std::cout << "Enter your resume: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[3] );
+
+          std::cout << "Enter your phone number: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[4] );
+        
+          selectedCommand = "Apply";
+          auto results = sessionControl->executeCommand( selectedCommand, parameters4 );
+          if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
+        }
+
+
       }
+
 
       else if( selectedCommand == "Another command" ) /* ... */ {}
 

@@ -14,7 +14,6 @@ namespace  // anonymous (private) working area
   // 2)  JL - Then define all system commands and possible functions with no implementations.
   //Applicant Functions
   STUB( getAllJobs   )
-  STUB( apply        )
   STUB( filterJobs   )
 
   //Employer Functions
@@ -31,6 +30,15 @@ namespace  // anonymous (private) working area
     // TO-DO  Verify there is such a book and the mark the book as being checked out by user
     std::string results = "Title \"" + args[0] + "\" checkout by \"" + session._credentials.userName + '"';
     session._logger << "checkoutBook:  " + results;
+    return {results};
+  }
+
+
+  std::any apply(Domain::Session::SessionBase & session, std::vector<std::string> & args)
+  {
+    // TO-DO  Verify there is such a job and the mark the job as being applied by user
+    std::string results = "Job \"" + args[0] + "\" applied by \"" + session._credentials.userName + '"';
+    session._logger << "apply:  " + results;
     return {results};
   }
 }    // anonymous (private) working area
@@ -113,14 +121,13 @@ namespace Domain::Session
   ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Borrower", credentials )
   {
     _commandDispatch = { { "All Jobs", getAllJobs },
-                         { "Filter Jobs", filterJobs },
-                         { "Apply", apply } };
+                         { "Filter Jobs", filterJobs }};
   }
 
 
 
 
-  CompanySession::CompanySession( const UserCredentials & credentials ) : SessionBase( "Librarian", credentials )
+  CompanySession::CompanySession( const UserCredentials & credentials ) : SessionBase( "Company", credentials )
   {
     _commandDispatch = { { "Checkout Book", checkoutBook },
                          { "Get Reviews", getReviews }};
