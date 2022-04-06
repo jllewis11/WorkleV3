@@ -17,6 +17,6 @@ namespace Domain::JobList
   };
 
   inline ApplyJobsHandler::~ApplyJobsHandler() noexcept = default;
-
+}
 
 

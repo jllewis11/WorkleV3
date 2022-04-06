@@ -20,10 +20,6 @@ namespace TechnicalServices::Persistence
   };
 
 
-
-
-  // Persistence Package within the Technical Services Layer Abstract class
-  // Singleton Class - only one instance of the DB exists for the entire system
   class PersistenceHandler
   {
     public:
@@ -46,7 +42,6 @@ namespace TechnicalServices::Persistence
       virtual UserCredentials          findCredentialsByName( const std::string & name ) = 0;   // Returns credentials for specified user, throws NoSuchUser if user not found
 
       // Destructor
-      // Pure virtual destructor helps force the class to be abstract, but must still be implemented
       virtual ~PersistenceHandler() noexcept = 0;
   };
 } // namespace TechnicalServices::Persistence
