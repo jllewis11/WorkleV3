@@ -27,7 +27,6 @@ namespace
   STUB( shutdown     )
 
 
-
   std::any apply(Domain::Session::SessionBase & session, std::vector<std::string> & args)
   {
     // TO-DO  Verify there is such a job and the mark the job as being applied by user
@@ -35,13 +34,7 @@ namespace
     session._logger << "apply:  " + results;
     return {results};
   }
-}    // anonymous (private) working area
-
-
-
-
-
-
+}  
 
 
 
@@ -98,7 +91,6 @@ namespace Domain::Session
 
     if( results.has_value() )
     {
-
       _logger << "Responding with: \"" + std::any_cast<const std::string &>( results ) + '"';
     }
 
