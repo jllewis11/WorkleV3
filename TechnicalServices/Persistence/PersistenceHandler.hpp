@@ -16,7 +16,6 @@ namespace TechnicalServices::Persistence
     std::string               userName;
     std::string               passPhrase;
     std::vector<std::string>  roles;
-    std::string               accNum;
   };
 
 

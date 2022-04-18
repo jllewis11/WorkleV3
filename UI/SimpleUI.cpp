@@ -232,40 +232,38 @@ namespace UI
 
 
       }
-      else if( selectedCommand == "Manage Profile")
+      else if ( selectedCommand == "Manage Name")
+      {std::cout<<"Function doesn't do any right now"<<std::endl;}
+
+      else if( selectedCommand == "Manage Job")
       {
           std::vector<std::vector<std::string>> allProfiles = _persistentData.findProfiles();
-          int option = 0;
           std::string newEntry;
-          std::string oldPassword;
-          std::cout<<"Select what you would like to manage"<<std::endl;
-          std::cout<<"1. Name"<<std::endl<<"2. Jobs"<<std::endl<<"3. Location"<<std::endl<<"4. Level of Education"<<std::endl<<"5. Password"<<std::endl;
-          std::cout << "action (1-5): ";
-          std::cin>>option;
+          int option = 0;
+          int i = 0;
 
-          switch(option){
-            case 1:
-            break;
-
-            case 2:
-            std::cout<<"Enter the work experience you wish to add: ";
-            std::cin >> std::ws;
-            std::getline( std::cin, newEntry);
+          std::cout<<"Enter the work experience you wish to add: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, newEntry);
             
-            allProfiles[1].emplace( allProfiles[1].begin()+3, newEntry );
-            for (int i = 0; i < allProfiles[1].size(); ++i)
-            { std::cout << allProfiles[1][i] << ", ";}
-            std::cout << std::endl;
-            break;
+          while( allProfiles[i][0].find(credentials.userName)) { i++; }
 
-            case 3:
-            break;
+          allProfiles[i].emplace( allProfiles[i].begin()+3, newEntry );
+          for (unsigned j = 0; j < allProfiles[i].size(); j++)
+          { std::cout << allProfiles[i][j] << ", ";}
+          std::cout << std::endl;
 
-            case 4:
-            break;
+      }
 
-            case 5:
-            std::cout<<"Please enter your current password: ";
+      else if ( selectedCommand == "Manage Location")
+      {std::cout<<"This function doesn't do anything right now"<<std::endl;}
+
+      else if( selectedCommand == "Manage Password" )
+      {
+        std::vector<std::vector<std::string>> allProfiles = _persistentData.findProfiles();
+        std::string newEntry;
+        std::string oldPassword;
+        std::cout<<"Please enter your current password: ";
             std::cin>>std::ws;
             std::getline(std::cin, oldPassword);
             std::cout<<"Please enter your new password: ";
@@ -273,24 +271,14 @@ namespace UI
             std::getline(std::cin, newEntry);
             if (oldPassword == credentials.passPhrase)
             {
+              credentials.passPhrase = newEntry;
               std::cout<<"Password successfully changed"<<std::endl;
-              break;
+              
             }
             std::cout<<"Error: old password does not match"<<std::endl;
-            break;
-
-          }
-
-
-          // for(int i = 0; i< allProfiles.size(); i++)
-          // {
-          //     std::cout<<allProfiles[1][i]<<" ";
-          // }
-
-          
-
-
+            
       }
+    
 
       else if( selectedCommand == "Another command" ) /* ... */ {}
 

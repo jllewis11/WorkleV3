@@ -13,9 +13,13 @@ namespace
 
   // 2)  JL - Then define all system commands and possible functions with no implementations.
   //Applicant Functions
-  STUB( getAllJobs   )
-  STUB( filterJobs   )
-  STUB( manageProfile)
+  STUB( getAllJobs      )
+  STUB( filterJobs      )
+  STUB( manageName      )
+  STUB( manageJob       )
+  STUB( manageLocation  )
+  STUB( manageEducation )
+  STUB( managePassword  )
   STUB( apply)
 
   //Employer Functions
@@ -110,7 +114,11 @@ namespace Domain::Session
   {
     _commandDispatch = { { "All Jobs", getAllJobs },
                          { "Filter Jobs", filterJobs },
-                         { "Manage Profile", manageProfile },
+                         { "Manage Name", manageName },
+                         { "Manage Job", manageJob},
+                         { "Manage Location", manageLocation},
+                         { "Manage Education", manageEducation},
+                         { "Manage Password", managePassword},
                          { "Apply", apply }};
   }
 

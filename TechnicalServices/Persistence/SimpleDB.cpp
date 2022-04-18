@@ -82,7 +82,7 @@ namespace TechnicalServices::Persistence
              { "John Doe", "9481", "6", "Front-end Developer at Fedex", "Minnesota", "Bachelors in Computer Science"},
              { "Timothy Jackson", "7895", "5", "Full-stack Developer at Twitter", "California", "Bachelors in Computer Science"},
              { "Ray Miles", "2578", "2", "Software Engineer at Bungie", "Seattle", "Bachelors in Computer Science"},
-             { "John Smith", "9985", "8", "Data Scientist at Amazon", "California", "Bachelors in Computer Science"},
+             { "Lily Smith", "9985", "8", "Data Scientist at Amazon", "California", "Bachelors in Computer Science"},
              { "Jane Doe", "4869", "6", "Technical Lead at Meta", "California", "Masters in Computer Science"}};
   }
 
