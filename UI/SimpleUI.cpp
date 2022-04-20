@@ -233,11 +233,12 @@ namespace UI
 
       }
       else if ( selectedCommand == "Manage Name")
-      {std::cout<<"Function doesn't do any right now"<<std::endl;}
+      {std::cout<<"Function doesn't do anything right now"<<std::endl;}
 
       else if( selectedCommand == "Manage Job")
       {
           std::vector<std::vector<std::string>> allProfiles = _persistentData.findProfiles();
+          
           std::string newEntry;
           int option = 0;
           int i = 0;
@@ -256,11 +257,13 @@ namespace UI
       }
 
       else if ( selectedCommand == "Manage Location")
-      {std::cout<<"This function doesn't do anything right now"<<std::endl;}
+      {std::cout<<"Function doesn't do anything right now"<<std::endl;}
 
       else if( selectedCommand == "Manage Password" )
       {
         std::vector<std::vector<std::string>> allProfiles = _persistentData.findProfiles();
+        auto & persistantData = TechnicalServices::Persistence::PersistenceHandler::instance();
+        std::vector<UserCredentials>CredsFromDB    = _persistentData.findCredentialsByName();
         std::string newEntry;
         std::string oldPassword;
         std::cout<<"Please enter your current password: ";
@@ -269,7 +272,7 @@ namespace UI
             std::cout<<"Please enter your new password: ";
             std::cin>>std::ws;
             std::getline(std::cin, newEntry);
-            if (oldPassword == credentials.passPhrase)
+            if (oldPassword == CredsFromDB.passPhrase)
             {
               credentials.passPhrase = newEntry;
               std::cout<<"Password successfully changed"<<std::endl;
