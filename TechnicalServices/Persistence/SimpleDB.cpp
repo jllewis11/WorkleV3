@@ -87,6 +87,7 @@ namespace TechnicalServices::Persistence
   }
 
 
+
   UserCredentials SimpleDB::findCredentialsByName( const std::string & name )
   {
     static std::vector<UserCredentials> storedUsers =
