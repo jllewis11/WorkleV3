@@ -262,23 +262,22 @@ namespace UI
       else if( selectedCommand == "Manage Password" )
       {
         std::vector<std::vector<std::string>> allProfiles = _persistentData.findProfiles();
-        auto & persistantData = TechnicalServices::Persistence::PersistenceHandler::instance();
-        std::vector<UserCredentials>CredsFromDB    = _persistentData.findCredentialsByName();
-        std::string newEntry;
-        std::string oldPassword;
-        std::cout<<"Please enter your current password: ";
-            std::cin>>std::ws;
-            std::getline(std::cin, oldPassword);
-            std::cout<<"Please enter your new password: ";
-            std::cin>>std::ws;
-            std::getline(std::cin, newEntry);
-            if (oldPassword == CredsFromDB.passPhrase)
-            {
-              credentials.passPhrase = newEntry;
-              std::cout<<"Password successfully changed"<<std::endl;
+
+        std::vector<std::string>              parameters5(3);
+        std::cout << "Please enter your current password: ";
+        std::cin >> std::ws;
+        std::getline( std::cin, parameters5[0] );
+        std::cout<<"Please enter your new password: ";
+        std::cin>>std::ws;
+        std::getline(std::cin, parameters5[1]);
+        selectedCommand = "managepassPhrase";
+
+      auto results = sessionControl->executeCommand( selectedCommand, parameters5 );
+        if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
+            //   std::cout<<"Password successfully changed"<<std::endl;
               
-            }
-            std::cout<<"Error: old password does not match"<<std::endl;
+            // }
+            // std::cout<<"Error: old password does not match"<<std::endl;
             
       }
     

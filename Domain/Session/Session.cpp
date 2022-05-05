@@ -20,6 +20,7 @@ namespace
   STUB( manageLocation  )
   STUB( manageEducation )
   STUB( managePassword  )
+  STUB( managepassPhrase)
   STUB( apply)
 
   //Employer Functions
@@ -33,10 +34,28 @@ namespace
 
   std::any apply(Domain::Session::SessionBase & session, std::vector<std::string> & args)
   {
+    
     // TO-DO  Verify there is such a job and the mark the job as being applied by user
     std::string results = "Job \"" + args[0] + "\" applied by \"" + session._credentials.userName + '"';
     session._logger << "apply:  " + results;
     return {results};
+  }
+
+  std::any managepassPhrase(Domain::Session::SessionBase & session, std::vector<std::string> & args)
+  {
+
+
+      if( session._credentials.passPhrase == args[0] )
+    {
+      std::string results             = "Password changed to: " + args[1] + "\" for user \"" + session._credentials.userName;
+      session._credentials.passPhrase = args[1];
+      return { results };
+    }
+    else
+    {
+      std::string results = "Incorrect password: " + args[0] + "\" for user \"" + session._credentials.userName;
+      return { results };
+    }
   }
 }  
 
