@@ -43,19 +43,15 @@ namespace
 
   std::any managepassPhrase(Domain::Session::SessionBase & session, std::vector<std::string> & args)
   {
-
-
-      if( session._credentials.passPhrase == args[0] )
+    if( session._credentials.passPhrase == args[0] )
     {
       std::string results             = "Password changed to: " + args[1] + "\" for user \"" + session._credentials.userName;
-      session._credentials.passPhrase = args[1];
+      // session._credentials.passPhrase = args[1];
       return { results };
     }
-    else
-    {
-      std::string results = "Incorrect password: " + args[0] + "\" for user \"" + session._credentials.userName;
-      return { results };
-    }
+    std::string results = "Incorrect password: " + args[0] + "\" for user \"" + session._credentials.userName;
+    return { results };
+    
   }
 }  
 
@@ -87,7 +83,7 @@ namespace Domain::Session
 
     for( const auto & [command, function] : _commandDispatch ) 
     {
-      if( command != "Apply" ) availableCommands.emplace_back( command );
+      if( command != "managepassPhrase" && command != "Apply") availableCommands.emplace_back( command );
     }
     
 
@@ -138,6 +134,7 @@ namespace Domain::Session
                          { "Manage Location", manageLocation},
                          { "Manage Education", manageEducation},
                          { "Manage Password", managePassword},
+                         { "managepassPhrase", managepassPhrase},
                          { "Apply", apply }};
   }
 
