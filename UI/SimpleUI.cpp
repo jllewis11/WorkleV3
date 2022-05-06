@@ -68,13 +68,7 @@ namespace UI
 
 
       // Fix later with no role selection -
-      unsigned menuSelection;
-      do
-      {
-        for( unsigned i = 0; i != roleLegalValues.size(); ++i )   std::cout << std::setw( 2 ) << i << " - " << roleLegalValues[i] << '\n';
-        std::cout << "  role (0-" << roleLegalValues.size()-1 << "): ";
-        std::cin  >> menuSelection;
-      } while( menuSelection >= roleLegalValues.size() );
+      unsigned menuSelection = 0;
 
       selectedRole = roleLegalValues[menuSelection];
 
@@ -238,47 +232,43 @@ namespace UI
           int option = 0;
           std::string newEntry;
           std::string oldPassword;
+          std::vector<std::string>              parameters5( 2 );
           std::cout<<"Select what you would like to manage"<<std::endl;
           std::cout<<"1. Name"<<std::endl<<"2. Jobs"<<std::endl<<"3. Location"<<std::endl<<"4. Level of Education"<<std::endl<<"5. Password"<<std::endl;
           std::cout << "action (1-5): ";
           std::cin>>option;
 
-          switch(option){
-            case 1:
-            break;
-
-            case 2:
-            std::cout<<"Enter the work experience you wish to add: ";
+          if( option == 2 )
+          {
+            std::cout << "Enter the work experience you wish to add: ";
             std::cin >> std::ws;
-            std::getline( std::cin, newEntry);
-            
-            allProfiles[1].emplace( allProfiles[1].begin()+3, newEntry );
-            for (int i = 0; i < allProfiles[1].size(); ++i)
-            { std::cout << allProfiles[1][i] << ", ";}
-            std::cout << std::endl;
-            break;
+            std::getline( std::cin, newEntry );
 
-            case 3:
-            break;
-
-            case 4:
-            break;
-
-            case 5:
-            std::cout<<"Please enter your current password: ";
-            std::cin>>std::ws;
-            std::getline(std::cin, oldPassword);
-            std::cout<<"Please enter your new password: ";
-            std::cin>>std::ws;
-            std::getline(std::cin, newEntry);
-            if (oldPassword == credentials.passPhrase)
+            parameters5[0]  = "2"; 
+            parameters5[1]  = newEntry;
+            selectedCommand = "Manage Profile";
+            auto results    = sessionControl->executeCommand( selectedCommand, parameters5 );
+            if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
+          }
+          else if( option == 5 )
+          {
+            std::cout << "Please enter your current password: ";
+            std::cin >> std::ws;
+            std::getline( std::cin, oldPassword );
+            std::cout << "Please enter your new password: ";
+            std::cin >> std::ws;
+            std::getline( std::cin, newEntry );
+            if( oldPassword == credentials.passPhrase )
             {
-              std::cout<<"Password successfully changed"<<std::endl;
-              break;
-            }
-            std::cout<<"Error: old password does not match"<<std::endl;
-            break;
+              std::cout << "Password successfully changed" << std::endl;
 
+            }
+            std::cout << "Error: old password does not match" << std::endl;
+
+          }
+          else
+          {
+            std::cout << "That option has not been implemented or Invalid option\n";
           }
 
 

@@ -4,6 +4,13 @@
 #include <any>
 #include <vector>
 
+#include "Domain/ApplicantProfile/ManageProfile.hpp"
+#include "Domain/ApplicantProfile/Profile.hpp"
+
+#include "TechnicalServices/Logging/LoggerHandler.hpp"
+#include "TechnicalServices/Persistence/PersistenceHandler.hpp"
+
+
 namespace 
 {
 
@@ -33,6 +40,39 @@ namespace
     std::string results = "Job \"" + args[0] + "\" applied by \"" + session._credentials.userName + '"';
     session._logger << "apply:  " + results;
     return {results};
+  }
+
+
+  std::any manageProfile(Domain::Session::SessionBase & session, std::vector<std::string> & args)
+  {
+      Domain::ApplicantProfile::OGProfileMaker * pfmaker = Domain::ApplicantProfile::OGProfileMaker::createProfileMaker();
+      
+      //pf get profile
+      Domain::ApplicantProfile::ManageProfile * profile= pfmaker->createProfile();
+
+      std::vector<std::string> pf = profile->getProfile(session._credentials.userName);
+
+
+      auto &                                   _persistantData = TechnicalServices::Persistence::PersistenceHandler::instance();
+
+      std::vector<std::vector<std::string>>     allProfiles     = _persistantData.findProfiles();
+
+      std::string                               results = "Profile retrieved for \"" + session._credentials.userName + '"' + "\n";
+
+
+      allProfiles[1].emplace( allProfiles[1].begin() + 3, args[1] );
+      for( int i = 0; i < allProfiles[1].size(); ++i )
+      {
+        std::cout << allProfiles[1][i] << ", ";
+      }
+      std::cout << std::endl;
+
+      std::cout << "ManageProfile Added:  " + args[0];
+
+      delete pfmaker;
+      delete profile;
+      return {results};
+
   }
 }  
 
@@ -65,6 +105,7 @@ namespace Domain::Session
     for( const auto & [command, function] : _commandDispatch ) 
     {
       if( command != "Apply" ) availableCommands.emplace_back( command );
+
     }
     
 
@@ -93,6 +134,8 @@ namespace Domain::Session
     {
       _logger << "Responding with: \"" + std::any_cast<const std::string &>( results ) + '"';
     }
+
+    std::cout << "Responding with: " << command << std::endl;
 
     return results;
   }
