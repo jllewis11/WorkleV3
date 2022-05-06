@@ -13,28 +13,15 @@
 
 namespace 
 {
-
-  #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
-                              { return {}; }
-
-
-  // 2)  JL - Then define all system commands and possible functions with no implementations.
-  //Applicant Functions
+  #define STUB( functionName ) std::any functionName( Domain::Session::SessionBase & , const std::vector<std::string> & ) \
+                        {return {};}    // Stubbed for now
   STUB( getAllJobs   )
   STUB( filterJobs   )
-  STUB( manageProfile)
-  STUB( apply)
-
-  //Employer Functions
   STUB( getReviews   )
-
-
-  //Admin Functions
   STUB( resetAccount )
   STUB( shutdown     )
 
-
-  std::any apply(Domain::Session::SessionBase & session, std::vector<std::string> & args)
+  std::any apply( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
     // TO-DO  Verify there is such a job and the mark the job as being applied by user
     std::string results = "Job \"" + args[0] + "\" applied by \"" + session._credentials.userName + '"';
@@ -43,7 +30,7 @@ namespace
   }
 
 
-  std::any manageProfile(Domain::Session::SessionBase & session, std::vector<std::string> & args)
+  std::any manageProfile( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
       Domain::ApplicantProfile::OGProfileMaker * pfmaker = Domain::ApplicantProfile::OGProfileMaker::createProfileMaker();
       
@@ -74,6 +61,7 @@ namespace
       return {results};
 
   }
+
 }  
 
 
@@ -135,8 +123,6 @@ namespace Domain::Session
       _logger << "Responding with: \"" + std::any_cast<const std::string &>( results ) + '"';
     }
 
-    std::cout << "Responding with: " << command << std::endl;
-
     return results;
   }
 
@@ -151,10 +137,10 @@ namespace Domain::Session
 
   ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Applicant", credentials )
   {
-    _commandDispatch = { { "All Jobs", getAllJobs },
+    _commandDispatch = { { "All Jobs", getAllJobs           },
                          { "Filter Jobs", filterJobs },
-                         { "Manage Profile", manageProfile },
-                         { "Apply", apply }};
+                         { "Manage Profile", manageProfile  },
+                         { "Apply", apply                   } };
   }
 
 
@@ -165,3 +151,4 @@ namespace Domain::Session
     _commandDispatch = { { "Get Reviews", getReviews }};
   }
 }    // namespace Domain::Session
+
