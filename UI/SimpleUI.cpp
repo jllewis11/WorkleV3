@@ -86,18 +86,19 @@ namespace UI
 
     } while( true );
 
-
+    unsigned menuSelection = 0;
+    auto     commands      = sessionControl->getCommands();
     // 4) Fetch functionality options for this role
     do
     {
-      auto        commands = sessionControl->getCommands();
+      
       std::string selectedCommand;
-      unsigned    menuSelection;
+      
 
       do
       {
         for( unsigned i = 0; i != commands.size(); ++i ) std::cout << std::setw( 3 ) << i << " - " << commands[i] << '\n';
-        std::cout << std::setw( 3 ) << commands.size() << " - " << "Quit\n";
+        std::cout << std::setw( 3 ) << commands.size() << " - " << "Logout\n";
 
         std::cout << "  action (0-" << commands.size() << "): ";
         std::cin >> menuSelection;
@@ -288,5 +289,17 @@ namespace UI
     } while( true );
 
     _logger << "Ending session and terminating";
+
+    std::cout << " 0 - Login\n 1 - Quit\n"
+              << "Action:  ";
+    std::cin >> menuSelection;
+
+    if( menuSelection == 0 ) SimpleUI::launch();
+
+
+
+
   }
+
+
 }
