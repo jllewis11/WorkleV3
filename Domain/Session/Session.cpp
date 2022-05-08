@@ -4,36 +4,64 @@
 #include <any>
 #include <vector>
 
+#include "Domain/ApplicantProfile/ManageProfile.hpp"
+#include "Domain/ApplicantProfile/Profile.hpp"
+
+#include "TechnicalServices/Logging/LoggerHandler.hpp"
+#include "TechnicalServices/Persistence/PersistenceHandler.hpp"
+
+
 namespace 
 {
-
-  #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
-                              { return {}; }
-
-
-  // 2)  JL - Then define all system commands and possible functions with no implementations.
-  //Applicant Functions
+  #define STUB( functionName ) std::any functionName( Domain::Session::SessionBase & , const std::vector<std::string> & ) \
+                        {return {};}    // Stubbed for now
   STUB( getAllJobs   )
   STUB( filterJobs   )
-  STUB( manageProfile)
-  STUB( apply)
-
-  //Employer Functions
   STUB( getReviews   )
-
-
-  //Admin Functions
   STUB( resetAccount )
   STUB( shutdown     )
 
-
-  std::any apply(Domain::Session::SessionBase & session, std::vector<std::string> & args)
+  std::any apply( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
     // TO-DO  Verify there is such a job and the mark the job as being applied by user
     std::string results = "Job \"" + args[0] + "\" applied by \"" + session._credentials.userName + '"';
     session._logger << "apply:  " + results;
     return {results};
   }
+
+
+  std::any manageProfile( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  {
+      Domain::ApplicantProfile::OGProfileMaker * pfmaker = Domain::ApplicantProfile::OGProfileMaker::createProfileMaker();
+      
+      //pf get profile
+      Domain::ApplicantProfile::ManageProfile * profile= pfmaker->createProfile();
+
+      std::vector<std::string> pf = profile->getProfile(session._credentials.userName);
+
+
+      auto &                                   _persistantData = TechnicalServices::Persistence::PersistenceHandler::instance();
+
+      std::vector<std::vector<std::string>>     allProfiles     = _persistantData.findProfiles();
+
+      std::string                               results = "Profile retrieved for \"" + session._credentials.userName + '"' + "\n";
+
+
+      allProfiles[1].emplace( allProfiles[1].begin() + 3, args[1] );
+      for( int i = 0; i < allProfiles[1].size(); ++i )
+      {
+        std::cout << allProfiles[1][i] << ", ";
+      }
+      std::cout << std::endl;
+
+      std::cout << "ManageProfile Added:  " + args[0];
+
+      delete pfmaker;
+      delete profile;
+      return {results};
+
+  }
+
 }  
 
 
@@ -65,6 +93,7 @@ namespace Domain::Session
     for( const auto & [command, function] : _commandDispatch ) 
     {
       if( command != "Apply" ) availableCommands.emplace_back( command );
+
     }
     
 
@@ -108,10 +137,10 @@ namespace Domain::Session
 
   ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Applicant", credentials )
   {
-    _commandDispatch = { { "All Jobs", getAllJobs },
+    _commandDispatch = { { "All Jobs", getAllJobs           },
                          { "Filter Jobs", filterJobs },
-                         { "Manage Profile", manageProfile },
-                         { "Apply", apply }};
+                         { "Manage Profile", manageProfile  },
+                         { "Apply", apply                   } };
   }
 
 
@@ -122,3 +151,4 @@ namespace Domain::Session
     _commandDispatch = { { "Get Reviews", getReviews }};
   }
 }    // namespace Domain::Session
+
