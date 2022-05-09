@@ -263,8 +263,10 @@ namespace UI
               std::cout << "Password successfully changed" << std::endl;
 
             }
-            std::cout << "Error: old password does not match" << std::endl;
-
+            else
+            {
+              std::cout << "Error: old password does not match" << std::endl;
+            }
           }
           else
           {
