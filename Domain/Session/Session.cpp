@@ -16,6 +16,7 @@ namespace
   #define STUB( functionName ) std::any functionName( Domain::Session::SessionBase & , const std::vector<std::string> & ) \
                         {return {};}    // Stubbed for now
   STUB( getAllJobs   )
+  STUB( AutoFilterJobs )
   STUB( filterJobs   )
   STUB( getReviews   )
   STUB( resetAccount )
@@ -54,7 +55,7 @@ namespace
       }
       std::cout << std::endl;
 
-      std::cout << "ManageProfile Added:  " + args[0];
+      std::cout << "ManageProfile Added:  " + args[1] << std::endl;
 
       delete pfmaker;
       delete profile;
@@ -138,6 +139,7 @@ namespace Domain::Session
   ApplicantSession::ApplicantSession( const UserCredentials & credentials ) : SessionBase( "Applicant", credentials )
   {
     _commandDispatch = { { "All Jobs", getAllJobs           },
+                         { "Auto Filter Jobs", AutoFilterJobs },
                          { "Filter Jobs", filterJobs },
                          { "Manage Profile", manageProfile  },
                          { "Apply", apply                   } };

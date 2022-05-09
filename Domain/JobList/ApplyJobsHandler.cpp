@@ -10,7 +10,9 @@
 #include "TechnicalServices/Logging/SimpleLogger.hpp"
 #include "TechnicalServices/Persistence/PersistenceHandler.hpp"
 
+#include "Domain/JobList/ApplyJobsHandler.hpp"
+
 namespace Domain::JobList
 {
-    ApplyJobsHandler::ApplyJobsHandler(){};
-}    // namespace Domain::ApplicantProfile
+  ApplyJobsHandler::ApplyJobsHandler(){};
+};    // namespace Domain::JobList

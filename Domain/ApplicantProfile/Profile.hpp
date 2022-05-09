@@ -50,6 +50,40 @@ namespace Domain::ApplicantProfile
   private:
     std::string resume = "file.txt";
   };
+
+  struct resume_data
+  {
+    //Name, email, phone, experience, education, skills, interests, hobbies, projects, references
+    std::string name;
+    std::string email;
+    std::string phone;
+    std::string experience;
+    std::string education;
+    std::string skills;
+    std::string interests;
+    std::string hobbies;
+    std::string projects;
+    std::string references;
+  };
+
+  class ProfileSelfResume : public ManageProfile
+  {
+  public:
+    ProfileSelfResume();
+    std::vector<std::string> getProfile( std::string username ) override;
+    void                     changePassword() override;
+    void                     setResume( std::vector<std::string> temp );
+    std::vector<std::string> getResume();
+    ~ProfileSelfResume();
+
+  protected:
+    // Copy assignment operators, protected to prevent mix derived-type assignments
+    ProfileSelfResume & operator=( const ProfileSelfResume & rhs ) = default;    // copy assignment
+    ProfileSelfResume & operator=( ProfileSelfResume && rhs ) = default;         // move assignment
+  private:
+    resume_data resume;
+  };
+
   struct OGProfileMaker
   {
     static OGProfileMaker *                           createProfileMaker();
@@ -65,6 +99,11 @@ namespace Domain::ApplicantProfile
   struct ProfileResumeMaker : OGProfileMaker
   {
     ProfileResume * createProfile() override;
+  };
+
+  struct ProfileSelfResumeMaker : OGProfileMaker
+  {
+    ProfileSelfResume * createProfile() override;
   };
 
 };    // namespace Domain::ApplicantProfile

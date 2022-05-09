@@ -112,6 +112,7 @@ namespace UI
       
       if ( selectedCommand == "All Jobs")
       {
+        std::cout << "Jobs Controller created" << std::endl;
         std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();
         
         //Print all jobs and all values in the vector vector 
@@ -162,9 +163,64 @@ namespace UI
           if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
         }
 
-      } else if (selectedCommand == "Filter Jobs")
+      } 
+      else if( selectedCommand == "AutoFilter Jobs" )
       //Filter through Keyword
       {
+        std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();
+
+        //Print all jobs and all values in the vector vector
+
+        for( unsigned i = 0; i < allJobs.size(); i++ )
+        {
+          std::cout << "Job #" << i << std::endl;
+          for( unsigned j = 0; j < allJobs[i].size(); j++ )
+          {
+            std::cout << allJobs[i][j] << " ";
+          }
+          std::cout << std::endl;
+        }
+        std::vector<std::string> parameters4( 5 );
+
+        char                     choice;
+        //Ask if they would like to apply to the job
+        std::cout << "Would you like to apply to this job? (y/n): ";
+        std::cin >> std::ws;
+        std::cin >> choice;
+
+        //If they want to apply, ask for the job number, name, email, resume.
+
+        if( choice == 'y' )
+        {
+          std::cout << "Enter job number: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[0] );
+
+          std::cout << "Enter your name: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[1] );
+
+          std::cout << "Enter your email: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[2] );
+
+          std::cout << "Enter your resume: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[3] );
+
+          std::cout << "Enter your phone number: ";
+          std::cin >> std::ws;
+          std::getline( std::cin, parameters4[4] );
+
+          selectedCommand = "Apply";
+          auto results    = sessionControl->executeCommand( selectedCommand, parameters4 );
+          if( results.has_value() ) _logger << "Received reply: \"" + std::any_cast<const std::string &>( results ) + '"';
+        }
+      }
+      else if (selectedCommand == "Filter Jobs")
+      //Filter through Keyword
+      {
+        std::cout << "FilterKeywordJobs Controller created" << std::endl;
         //Ask for keyword
         //Print Search for either Title, company 
 
