@@ -24,8 +24,7 @@ namespace UI
 {
   // Default constructor
   SimpleUI::SimpleUI()
-  : _jobHandler   ( std::make_unique<Domain::JobList::Jobs>()                     ),   
-    _loggerPtr     ( TechnicalServices::Logging::LoggerHandler::create()            ),
+  : _loggerPtr     ( TechnicalServices::Logging::LoggerHandler::create()            ),
     _persistentData( TechnicalServices::Persistence::PersistenceHandler::instance() )
   {
     _logger << "Simple UI being used and has been successfully initialized";

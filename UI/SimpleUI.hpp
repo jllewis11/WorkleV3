@@ -31,8 +31,6 @@ namespace UI
 
 
     private:
-      
-      std::unique_ptr<Domain::JobList::ApplyJobsHandler>                _jobHandler;
 
       std::unique_ptr<TechnicalServices::Logging::LoggerHandler>            _loggerPtr;
       TechnicalServices::Persistence::PersistenceHandler                  & _persistentData;
