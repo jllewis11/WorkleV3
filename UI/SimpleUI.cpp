@@ -112,7 +112,6 @@ namespace UI
       
       if ( selectedCommand == "All Jobs")
       {
-        std::cout << "Jobs Controller created" << std::endl;
         std::vector<std::vector<std::string>> allJobs = _persistentData.findJobs();
         
         //Print all jobs and all values in the vector vector 
@@ -220,7 +219,7 @@ namespace UI
       else if (selectedCommand == "Filter Jobs")
       //Filter through Keyword
       {
-        std::cout << "FilterKeywordJobs Controller created" << std::endl;
+
         //Ask for keyword
         //Print Search for either Title, company 
 
